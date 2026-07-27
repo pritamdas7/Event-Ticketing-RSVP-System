@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Organizer Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <h2>RSVP Admin</h2>
+            <ul>
+                <li class="active" data-target="dashboard-section">Dashboard Overview</li>
+                <li data-target="wizard-section">Create Event</li>
+            </ul>
+        </nav>
+        <main class="main-content">
+
+            <section id="dashboard-section" class="content-section">
+                <header class="page-header">
+                    <h1>Analytics Dashboard</h1>
+                    <button class="btn-primary" id="exportBtn">Export Report</button>
+                </header>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <h3>Total Revenue</h3>
+                        <p class="stat-number">₹12,450.00</p>
+                        <span class="stat-detail">Processed via Stripe</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Tickets Sold</h3>
+                        <p class="stat-number">8 / 12</p>
+                        <span class="stat-detail">67% Capacity</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Live Check-ins</h3>
+                        <p class="stat-number">6</p>
+                        <span class="stat-detail">QR Validated</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="wizard-section" class="content-section hidden">
+                <header class="page-header">
+                    <h1>Create New Event</h1>
+                </header>
+                <div class="event-wizard">
+                    <p class="section-desc">Configuration wizard for dates, venues, and ticket tiers.</p>
+                    <form class="wizard-form">
+                        <div class="form-group">
+                            <label>Event Name</label>
+                            <input type="text" id="wizardEventName" placeholder="Enter event title">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group half-width">
+                                <label>Date & Time</label>
+                                <input type="datetime-local" id="wizardDate">
+                            </div>
+                            <div class="form-group half-width">
+                                <label>Total Capacity</label>
+                                <input type="text" id="wizardCapacity" placeholder="e.g. 500">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Ticket Tiers</label>
+                            <select id="wizardTier">
+                                <option>General Admission Only</option>
+                                <option>VIP + General Admission</option>
+                                <option>Reserved Seating (Interactive Map)</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn-primary" id="generateEventBtn">Generate Event Details</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</body>
+
+</html>

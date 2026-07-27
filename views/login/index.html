@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSVP Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <main class="login-shell">
+        <section class="hero-card">
+            <p class="eyebrow">Event access portal</p>
+            <h1>Sign in to RSVP</h1>
+            <p class="hero-copy">Use the attendee login for the ticketing flow, or switch to the admin path for organizer tools.</p>
+
+            <div class="demo-credentials">
+                <span>Attendee demo: attendee / rsvp123</span>
+                <span>Organizer demo: organizer / admin123</span>
+            </div>
+        </section>
+
+        <section class="login-card">
+            <form class="login-form" method="post" action="/login">
+                <input type="hidden" name="role" id="loginRole" value="attendee">
+
+                <div class="form-header">
+                    <h2 id="loginTitle">Attendee Login</h2>
+                    <button type="button" class="admin-toggle" id="adminToggle">Login as admin</button>
+                </div>
+
+                <p class="status-message" id="statusMessage">Normal login routes you to the attendee page.</p>
+
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" autocomplete="username" required>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" autocomplete="current-password" required>
+                </div>
+
+                <p class="error-message" id="errorMessage" hidden>Invalid credentials. Try the demo login details shown on the left.</p>
+
+                <button type="submit" class="login-button" id="submitButton">Login to attendee</button>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

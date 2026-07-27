@@ -1,0 +1,16 @@
+{
+  "name": "rsvp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RSVP demo with attendee and organizer routes",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
