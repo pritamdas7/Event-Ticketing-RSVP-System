@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Ticketing & RSVP System</title>
-    <link rel="stylesheet" href="/event/style.css">
+    <title>Secure Event RSVP Portal</title>
+    <link rel="stylesheet" href="/attendee/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -13,49 +13,64 @@
 </head>
 
 <body>
+    <div class="dashboard-header">
+        <button class="nav-btn" onclick="window.location.href='/events'">← Back to Events List</button>
+        <button class="logout-btn" id="logoutBtn">Log Out</button>
+    </div>
+
     <div class="container">
         <header class="top-header">
-            <h1 id="eventTitle">Loading Event...</h1>
-            <p>Secure your spot and receive your QR Entry Ticket.</p>
+            <h1 id="eventTitle">Loading Event Details...</h1>
+            <p id="eventDescription">Querying event engine metadata...</p>
         </header>
+
         <main class="content-area">
-            <form class="rsvp-form">
-                <div class="section-title">Step 1: Choose Ticket Tier</div>
-                <div class="input-box radio-group row-group">
-                    <div>
-                        <input type="radio" id="vip" name="tier" value="vip">
-                        <label for="vip" class="inline-label">VIP Access</label>
+            <div class="meta-status-bar">
+                <div class="meta-pill">Date: <span id="eventDate">--/--/----</span></div>
+                <div class="meta-pill">Availability: <span id="eventCapacity">0 / 0 Filled</span></div>
+            </div>
+
+            <form class="rsvp-form" onsubmit="return false;">
+                <div class="section-title">Step 1: Select Seating Tier</div>
+                <div class="tier-selection-container">
+                    <label class="tier-card">
+                        <input type="radio" name="seatTier" value="vip" checked>
+                        <div class="tier-details">
+                            <span class="tier-name">VIP Only</span>
+                            <span class="tier-desc">Premium priority seating & lounge access</span>
+                        </div>
+                    </label>
+
+                    <label class="tier-card">
+                        <input type="radio" name="seatTier" value="general">
+                        <div class="tier-details">
+                            <span class="tier-name">General Admission</span>
+                            <span class="tier-desc">Standard main hall admission seats</span>
+                        </div>
+                    </label>
+
+                    <label class="tier-card">
+                        <input type="radio" name="seatTier" value="waitlist">
+                        <div class="tier-details">
+                            <span class="tier-name">Join Waitlist</span>
+                            <span class="tier-desc">Queue up for next available opening</span>
+                        </div>
+                    </label>
+
+                    <div class="seat-map-info-box" id="seatInfoBox">
+                        <strong>Seat Map Guidelines:</strong> Select a tier above to highlight available seats. VIP seats are highlighted in
+                        purple, General in teal. Greyed-out seats belong to unselected tiers or are already claimed by other attendees.
                     </div>
-                    <div>
-                        <input type="radio" id="general" name="tier" value="general" checked>
-                        <label for="general" class="inline-label">General Admission</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="waitlist" name="tier" value="waitlist">
-                        <label for="waitlist" class="inline-label">Join Waitlist</label>
-                    </div>
+                    
+                    <div class="seat-map" id="attendeeSeatMap"></div>
                 </div>
 
-                <div class="section-title">Step 2: Seat Selection</div>
-                <p class="helper-text" id="seatHelper">Select your preferred seats from the interactive map.</p>
-
-                <div class="seat-map" id="seatMap"></div>
-
-                <div class="section-title">Step 3: Attendee Details</div>
-                <div class="input-box">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
-                </div>
-                <div class="input-box">
-                    <label for="email">Email Address (For QR Ticket Delivery)</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <div class="section-title">Step 2: Confirm Ticket</div>
+                <div class="status-alert-box" id="statusMessage">
+                    Ready to process reservation transaction.
                 </div>
 
-                <div class="section-title">Step 4: Payment & Checkout</div>
-                <div class="payment-info">
-                    <p>Secure payment processing via Stripe Connect.</p>
-                </div>
-                <button type="button" class="submit-button">Proceed to Secure Checkout</button>
+                <button type="button" class="submit-button" id="submitRsvpBtn">Confirm My Seat Reservation</button>
             </form>
         </main>
     </div>

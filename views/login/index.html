@@ -4,54 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RSVP Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Secure RSVP Gateway</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="/login/style.css">
 </head>
 
 <body>
-    <main class="login-shell">
-        <section class="hero-card">
-            <p class="eyebrow">Event access portal</p>
-            <h1>Sign in to RSVP</h1>
-            <p class="hero-copy">Use the attendee login for the ticketing flow, or switch to the admin path for organizer tools.</p>
 
-            <div class="demo-credentials">
-                <span>Attendee demo: attendee / rsvp123</span>
-                <span>Organizer demo: organizer / admin123</span>
+    <main class="auth-container">
+        <div class="glass-card">
+
+            <div class="auth-header">
+                <h2 id="auth-title">Secure Portal Sign In</h2>
+                <p class="auth-subtitle">RSVP & Event Management Platform</p>
             </div>
-        </section>
 
-        <section class="login-card">
-            <form class="login-form" method="post" action="/login">
-                <input type="hidden" name="role" id="loginRole" value="attendee">
+            <!-- Real-time Error Notification Element -->
+            <div id="auth-error-message" class="error-banner" style="display: none;"></div>
 
-                <div class="form-header">
-                    <h2 id="loginTitle">Attendee Login</h2>
-                    <button type="button" class="admin-toggle" id="adminToggle">Login as admin</button>
+            <form id="auth-form" autocomplete="off">
+
+                <!-- Username Input Field -->
+                <div class="input-group">
+                    <label for="auth-username">Username</label>
+                    <input type="text" id="auth-username" name="username" placeholder="Enter your username" required
+                        minlength="3" maxlength="30">
                 </div>
 
-                <p class="status-message" id="statusMessage">Normal login routes you to the attendee page.</p>
-
-                <div class="field">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" autocomplete="username" required>
+                <!-- Password Input Field -->
+                <div class="input-group">
+                    <label for="auth-password">Password</label>
+                    <input type="password" id="auth-password" name="password" placeholder="••••••••" required>
                 </div>
 
-                <div class="field">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" autocomplete="current-password" required>
+                <!-- Role Selector Field -->
+                <div class="input-group">
+                    <label for="auth-role">Account Role</label>
+                    <select id="auth-role" name="role" required>
+                        <option value="attendee" selected>Attendee (Join Events)</option>
+                        <option value="organizer">Organizer (Host Events)</option>
+                    </select>
                 </div>
 
-                <p class="error-message" id="errorMessage" hidden>Invalid credentials. Try the demo login details shown on the left.</p>
+                <!-- Dynamic Invite Code Field (Hidden by default, shown via script.js during Organizer Signup) -->
+                <div class="input-group" id="invite-code-container" style="display: none;">
+                    <label for="auth-invite-code">Organizer Invite Token</label>
+                    <input type="text" id="auth-invite-code" name="inviteCode" placeholder="ORG-XXXX-XXXX">
+                </div>
 
-                <button type="submit" class="login-button" id="submitButton">Login to attendee</button>
+                <!-- Submit Button -->
+                <button type="submit" id="auth-submit-btn" class="submit-btn">
+                    Authenticate
+                </button>
+
             </form>
-        </section>
+
+            <!-- View State Toggle Link -->
+            <div class="auth-footer">
+                <a href="#" id="toggle-auth-mode">Don't have an account? Sign Up</a>
+            </div>
+
+        </div>
     </main>
+
+    <!-- Connect script handling JSON API dispatches -->
+    <script src="/login/script.js"></script>
 </body>
 
 </html>

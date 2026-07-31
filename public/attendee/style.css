@@ -1,0 +1,316 @@
+﻿* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  color: #f5f5f7;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(187, 134, 252, 0.22), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(3, 218, 198, 0.16), transparent 32%),
+    linear-gradient(135deg, #0d0d0d 0%, #111118 48%, #17171f 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+/* Header Action Layout Controls */
+.dashboard-header {
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.nav-btn,
+.logout-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #b7b7c4;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  border-color: #bb86fc;
+  color: #bb86fc;
+  background: rgba(187, 134, 252, 0.05);
+}
+
+.logout-btn:hover {
+  border-color: #ff4a4a;
+  color: #ff4a4a;
+  background: rgba(255, 74, 74, 0.05);
+}
+
+.container {
+  width: min(650px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  background: rgba(18, 18, 24, 0.82);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.top-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px 40px 24px 40px;
+  text-align: left;
+}
+
+.top-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.top-header p {
+  font-size: 14px;
+  color: #9da0b5;
+}
+
+.content-area {
+  padding: 0 40px 40px 40px;
+}
+
+.meta-status-bar {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 28px;
+}
+
+.meta-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #b7b7c4;
+}
+
+.meta-pill span {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #bb86fc;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Seating Tier Interactive Selection Styles */
+.tier-selection-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.tier-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 20px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tier-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(187, 134, 252, 0.3);
+}
+
+.tier-card input[type="radio"] {
+  accent-color: #bb86fc;
+  width: 18px;
+  height: 18px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.tier-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.tier-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.tier-desc {
+  font-size: 12px;
+  color: #9da0b5;
+}
+
+/* Accent border highlight on selection */
+.tier-card:has(input:checked) {
+  border-color: #bb86fc;
+  background: rgba(187, 134, 252, 0.04);
+}
+
+.seat-map {
+  display: grid;
+  /* Columns and rows will be set dynamically via JS style overrides */
+  grid-template-columns: repeat(var(--grid-cols, 6), 50px);
+  gap: 12px;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.seat {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+/* Base Types */
+.seat.general {
+  background-color: #03dac6;
+  color: #0d0d0d;
+}
+
+.seat.vip {
+  background-color: #bb86fc;
+  color: #0d0d0d;
+}
+
+/* Interactive States */
+.seat:hover:not(.disabled):not(.booked) {
+  filter: brightness(1.2);
+  transform: translateY(-2px);
+}
+
+.seat.selected {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+  transform: scale(1.08);
+}
+
+/* Disabled / Booked States */
+.seat.disabled {
+  background-color: #333333 !important;
+  color: #666666 !important;
+  pointer-events: none;
+}
+
+.seat.booked {
+  background-color: #ff4a4a !important;
+  color: #ffffff !important;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* Informational Box specific to Attendee view */
+.seat-map-info-box {
+  background: rgba(3, 218, 198, 0.1);
+  border-left: 4px solid #03dac6;
+  color: #b7b7c4;
+  padding: 14px 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.seat-map-info-box strong {
+  color: #ffffff;
+}
+
+.helper-text {
+  font-size: 14px;
+  color: #9da0b5;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.status-alert-box {
+  font-size: 13px;
+  color: #9da0b5;
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.submit-button {
+  width: 100%;
+  background: linear-gradient(135deg, #f5f5f7, #bb86fc);
+  color: #0d0d0d;
+  border: none;
+  padding: 16px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.1s ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.submit-button:disabled {
+  background: rgba(255, 255, 255, 0.08);
+  color: #6e6e73;
+  cursor: not-allowed;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 550px) {
+
+  .top-header,
+  .content-area {
+    padding: 24px;
+  }
+
+  .meta-status-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

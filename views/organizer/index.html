@@ -4,85 +4,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Organizer Dashboard</title>
+    <title>Organizer Dashboard | RSVP Platform</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <div class="dashboard-container">
-        <nav class="sidebar">
-            <h2>RSVP Admin</h2>
-            <ul>
-                <li class="active" data-target="dashboard-section">Dashboard Overview</li>
-                <li data-target="wizard-section">Create Event</li>
-            </ul>
-        </nav>
-        <main class="main-content">
+<body class="dashboard-body">
 
-            <section id="dashboard-section" class="content-section">
-                <header class="page-header">
-                    <h1>Analytics Dashboard</h1>
-                    <button class="btn-primary" id="exportBtn">Export Report</button>
-                </header>
-                <div class="stats-row">
-                    <div class="stat-card">
-                        <h3>Total Revenue</h3>
-                        <p class="stat-number">₹12,450.00</p>
-                        <span class="stat-detail">Processed via Stripe</span>
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+        <div class="brand">RSVP Organizer</div>
+        <ul class="sidebar-menu">
+            <li data-target="dashboard-section" class="active">Overview & Analytics</li>
+            <li data-target="wizard-section">Create Event</li>
+            <li id="logoutSidebarBtn" class="logout-item" style="color: #ff453a; margin-top: auto;">Secure Logout</li>
+        </ul>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="content">
+
+        <!-- 📊 SECTION 1: DASHBOARD & ANALYTICS -->
+        <section id="dashboard-section" class="content-section">
+            <h1 style="margin-bottom: 20px;">Operational Overview</h1>
+
+            <!-- Metrics Grid -->
+            <div class="metrics-grid">
+                <div class="stat-card">
+                    <h3>Total Hosted Events</h3>
+                    <p id="totalEventsVal" class="stat-number" style="color: #FFFFFF;">0</p>
+                    <span class="stat-detail">Active operations</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>VIP Tier Utilization</h3>
+                    <p id="vipUtilizationVal" class="stat-number" style="color: #FFD700;">0 / 0</p>
+                    <span class="stat-detail">Premium seats claimed</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>General Tier Utilization</h3>
+                    <p id="generalUtilizationVal" class="stat-number" style="color: #0A84FF;">0 / 0</p>
+                    <span class="stat-detail">Standard entries claimed</span>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Active Waitlist Queue</h3>
+                    <p id="waitlistQueueVal" class="stat-number" style="color: #BF5AF2;">0</p>
+                    <span class="stat-detail">Attendees waiting for opening</span>
+                </div>
+            </div>
+
+            <!-- Live Inventory Grid -->
+            <h2 style="font-size: 18px; margin-bottom: 15px;">Live Inventory Manager</h2>
+            <div id="organizerEventsGrid">
+                <!-- JS dynamically populates this area -->
+            </div>
+        </section>
+
+
+        <!-- 🛠️ SECTION 2: EVENT WIZARD -->
+        <!-- 🛠️ SECTION 2: EVENT WIZARD -->
+        <section id="wizard-section" class="content-section hidden">
+            <h1 style="margin-bottom: 20px;">Event Architect</h1>
+        
+            <div class="event-wizard">
+                <p class="section-desc">Define your event schedule parameters and grid scale dimensions.</p>
+        
+                <!-- Row 1: Title and Date -->
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="wizardEventName">Event Title</label>
+                        <input type="text" id="wizardEventName" placeholder="e.g., Gala 2026">
                     </div>
-                    <div class="stat-card">
-                        <h3>Tickets Sold</h3>
-                        <p class="stat-number">8 / 12</p>
-                        <span class="stat-detail">67% Capacity</span>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Live Check-ins</h3>
-                        <p class="stat-number">6</p>
-                        <span class="stat-detail">QR Validated</span>
+                    <div class="form-group half-width">
+                        <label for="wizardDate">Date & Time</label>
+                        <input type="datetime-local" id="wizardDate">
                     </div>
                 </div>
-            </section>
-
-            <section id="wizard-section" class="content-section hidden">
-                <header class="page-header">
-                    <h1>Create New Event</h1>
-                </header>
-                <div class="event-wizard">
-                    <p class="section-desc">Configuration wizard for dates, venues, and ticket tiers.</p>
-                    <form class="wizard-form">
-                        <div class="form-group">
-                            <label>Event Name</label>
-                            <input type="text" id="wizardEventName" placeholder="Enter event title">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group half-width">
-                                <label>Date & Time</label>
-                                <input type="datetime-local" id="wizardDate">
-                            </div>
-                            <div class="form-group half-width">
-                                <label>Total Capacity</label>
-                                <input type="text" id="wizardCapacity" placeholder="e.g. 500">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Ticket Tiers</label>
-                            <select id="wizardTier">
-                                <option>General Admission Only</option>
-                                <option>VIP + General Admission</option>
-                                <option>Reserved Seating (Interactive Map)</option>
-                            </select>
-                        </div>
-                        <button type="button" class="btn-primary" id="generateEventBtn">Generate Event Details</button>
-                    </form>
+        
+                <!-- Row 2: Grid Dimensions -->
+                <div class="form-row">
+                    <div class="form-group half-width">
+                        <label for="gridRows">Number of Rows</label>
+                        <input type="number" id="gridRows" placeholder="e.g., 4" min="1">
+                    </div>
+                    <div class="form-group half-width">
+                        <label for="gridCols">Number of Columns</label>
+                        <input type="number" id="gridCols" placeholder="e.g., 6" min="1">
+                    </div>
                 </div>
-            </section>
+        
+                <!-- Layout Generation Control Wrapper -->
+                <div class="form-group" style="margin-top: 10px; margin-bottom: 20px;">
+                    <button type="button" id="buildGridBtn" class="btn-secondary"
+                        style="width: 100%; padding: 14px; display: block;">
+                        Build Coordinate Grid
+                    </button>
+                </div>
+        
+                <!-- CSS Grid Dynamic Seat Map injected here via JS variables -->
+                <div id="organizerSeatMap" class="seat-map" style="display: none;"></div>
+        
+                <!-- Database Submission Control Wrapper -->
+                <div class="form-group" style="margin-top: 20px; margin-bottom: 0;">
+                    <button type="button" id="generateEventBtn" class="btn-primary"
+                        style="width: 100%; padding: 16px; display: block;">
+                        Publish Event to Database
+                    </button>
+                </div>
+            </div>
+        </section>
 
-        </main>
+    </main>
+
+    <!-- ✏️ EDIT EVENT MODAL -->
+    <div id="editEventModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Modify Event Metadata</h2>
+            <input type="hidden" id="editEventId">
+
+            <div class="form-group">
+                <label>Event Title</label>
+                <input type="text" id="editEventName">
+            </div>
+
+            <div class="form-group">
+                <label>Event Date & Time</label>
+                <input type="datetime-local" id="editEventDate">
+            </div>
+
+            <div class="modal-actions">
+                <button id="saveEventBtn" class="btn-primary">Save Modifications</button>
+                <button id="closeModalBtn" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
     </div>
+
+    <script src="/organizer/script.js"></script>
 </body>
 
 </html>

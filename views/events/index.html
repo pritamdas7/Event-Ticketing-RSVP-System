@@ -4,24 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendee Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Explore Available Events</title>
+    <link rel="stylesheet" href="/events/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="/events/script.js" defer></script>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Welcome Back!</h1>
-        <p class="subtitle">Select an upcoming event to reserve your seat:</p>
+    <div class="dashboard-wrapper">
+        <!-- Top Navigation -->
+        <header class="main-nav">
+            <div class="nav-branding">RSVP Portal</div>
+            <button class="logout-btn" id="logoutBtn">Log Out</button>
+        </header>
 
-        <div id="eventList" class="event-list-container">
-            <p>Loading available events...</p>
-        </div>
+        <!-- Dynamic Feed Area -->
+        <main class="feed-container">
+            <header class="feed-header">
+                <h1>Scheduled Events</h1>
+                <p>Browse listings, inspect seat layouts, and confirm your reservations instantly.</p>
+            </header>
+
+            <div class="status-alert-box hidden" id="feedStatus"></div>
+
+            <div class="events-grid" id="eventsGrid">
+                <!-- JavaScript will inject dynamic glassmorphic event cards here -->
+                <div class="loading-shimmer">Synchronizing event feed database...</div>
+            </div>
+        </main>
     </div>
-
-    <script src="script.js"></script>
 </body>
 
 </html>
