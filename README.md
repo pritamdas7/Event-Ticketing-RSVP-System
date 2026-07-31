@@ -38,3 +38,39 @@ A full-stack, scalable event management and ticketing platform. This system empo
 ├── .gitignore            # Git exclusion rules
 ├── package.json          # Dependency manifests
 └── server.js             # Application entry point
+```
+
+## ⚙️ Installation & Setup
+
+1. Clone the repository and install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Configure environment variables:
+
+   Create a `.env` file in the project root and add:
+
+   ```dotenv
+   PORT=3000
+   MONGO_URI=mongodb://127.0.0.1:27017/rsvp_system
+   SESSION_SECRET=your_secret_key
+   ```
+
+3. Boot the Server:
+
+   ```bash
+   npm start
+   ```
+
+   The application will be live at http://localhost:3000.
+
+## 🧪 Validating the Waitlist Auto-Promotion
+
+1.   To test the automated FIFO pipeline, follow this recommended scenario:
+2.   Host setup: Log in as an **Organizer** and create an event with exactly **2** seats.
+3.   Fill capacity: Log in as two separate **Attendees** (**User A** and **User B**) and reserve both seats.
+4.   Trigger waitlist: Log in as a third **Attendee** (**User C**) and attempt to **RSVP**. You will be successfully placed in the waitlist queue.
+5.   Execute promotion: Log back in as **User A** or **User B** and cancel the reservation.
+6.   Verify: Check the database or **User C**'s dashboard to confirm **User C** has been automatically promoted from the waitlist into the newly opened seat. 
