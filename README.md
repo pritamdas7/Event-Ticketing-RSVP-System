@@ -1,76 +1,41 @@
-# Secure RSVP & Event Ticketing Platform
+﻿# Secure RSVP & Event Ticketing Platform
 
-A full-stack, scalable event management and ticketing platform. This system empowers organizers to build dynamic, interactive seating grids while providing attendees with a seamless reservation experience, complete with an automated FIFO (First-In, First-Out) waitlist that promotes users as seats become available.
+This repository is now split into two major areas:
 
-## 🚀 Key Features
+- `client/` contains the React UI built with Vite.
+- `server/` contains the Express API, session handling, models, and route handlers.
 
-*   **Role-Based Access Control:** Secure portal routing for two distinct user types: Organizers (Event Hosts) and Attendees (Guests).
-*   **Dynamic Seat Mapping:** An interactive coordinate grid builder allowing organizers to customize event layouts, set rows/columns, and designate VIP vs. General Admission seats.
-*   **Automated FIFO Waitlist Engine:** When an event is at capacity, users are routed to a tier-specific queue. If a confirmed attendee cancels, the system automatically promotes the next eligible user in line and updates the database.
-*   **Real-Time Analytics Dashboard:** Organizers have access to live metrics, including total hosted events, tier utilization (VIP/General booked vs. total), and active waitlist queue sizes.
-*   **Glassmorphic UI/UX:** A modern, responsive frontend built with native HTML/CSS/JS, featuring state-driven UI updates and secure form interception.
-*   **Secure Infrastructure:** Implementation of bcrypt password hashing, HTTP-only session cookies, anti-cache middleware for protected routes, and NoSQL injection mitigation.
+## Stack
 
-## 🛠️ Tech Stack
+- Frontend: React, React Router, Vite
+- Backend: Node.js, Express, MongoDB, Mongoose
+- Auth: Express Session, bcrypt
 
-*   **Backend:** Node.js, Express.js
-*   **Database:** MongoDB, Mongoose (ODM)
-*   **Authentication:** Express-Session, Bcrypt
-*   **Frontend:** HTML5, CSS3 (CSS Variables, Grid, Flexbox), Vanilla JavaScript
-*   **Architecture:** MVC-inspired (Models, Views, Controllers, Routes)
+## Run locally
 
-## 📁 Project Structure
+Install dependencies first:
 
-```text
-/
-├── config/               # Database connection setup
-├── controllers/          # Core business logic (Events, Auth)
-├── middleware/           # Route guards and anti-cache protection
-├── models/               # Mongoose schemas (User, Event, InviteCode)
-├── public/               # Global static assets (CSS, JS)
-│   ├── attendee/
-│   ├── events/
-│   ├── login/
-│   └── organizer/
-├── routes/               # API endpoints and view distribution
-├── views/                # Protected HTML layouts
-├── .env                  # Environment variables (ignored in Git)
-├── .gitignore            # Git exclusion rules
-├── package.json          # Dependency manifests
-└── server.js             # Application entry point
+```bash
+npm install
 ```
 
-## ⚙️ Installation & Setup
+Start both client and server in development:
 
-1. Clone the repository and install dependencies:
+```bash
+npm run dev
+```
 
-   ```bash
-   npm install
-   ```
+Or run them separately:
 
-2. Configure environment variables:
+```bash
+npm run server
+npm run client
+```
 
-   Create a `.env` file in the project root and add:
+Build the React client for production:
 
-   ```dotenv
-   PORT=3000
-   MONGO_URI=mongodb://127.0.0.1:27017/rsvp_system
-   SESSION_SECRET=your_secret_key
-   ```
+```bash
+npm run build
+```
 
-3. Boot the Server:
-
-   ```bash
-   npm start
-   ```
-
-   The application will be live at http://localhost:3000.
-
-## 🧪 Validating the Waitlist Auto-Promotion
-
-1.   To test the automated FIFO pipeline, follow this recommended scenario:
-2.   Host setup: Log in as an **Organizer** and create an event with exactly **2** seats.
-3.   Fill capacity: Log in as two separate **Attendees** (**User A** and **User B**) and reserve both seats.
-4.   Trigger waitlist: Log in as a third **Attendee** (**User C**) and attempt to **RSVP**. You will be successfully placed in the waitlist queue.
-5.   Execute promotion: Log back in as **User A** or **User B** and cancel the reservation.
-6.   Verify: Check the database or **User C**'s dashboard to confirm **User C** has been automatically promoted from the waitlist into the newly opened seat. 
+The server serves the built client from `client/dist` in production.

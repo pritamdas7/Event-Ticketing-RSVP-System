@@ -1,20 +1,36 @@
 {
-  "name": "rsvp",
-  "version": "1.0.0",
-  "private": true,
-  "description": "RSVP demo with attendee and organizer routes",
-  "main": "server.js",
-  "scripts": {
-    "start": "nodemon server.js"
-  },
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "dotenv": "^17.4.2",
-    "express": "^4.22.2",
-    "express-session": "^1.19.0",
-    "mongoose": "^9.9.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.14"
-  }
+    "name": "rsvp",
+    "version": "1.0.0",
+    "private": true,
+    "description": "RSVP demo with attendee and organizer routes",
+    "main": "server/server.js",
+    "scripts": {
+        "start": "node server/server.js",
+        "server": "node server/server.js",
+        "client": "vite --config client/vite.config.mjs",
+        "dev": "concurrently \"npm run server\" \"npm run client\"",
+        "build": "vite build --config client/vite.config.mjs"
+    },
+    "dependencies": {
+        "@stripe/react-stripe-js": "^6.8.0",
+        "@stripe/stripe-js": "^9.13.0",
+        "bcrypt": "^6.0.0",
+        "dotenv": "^17.4.2",
+        "express": "^4.22.2",
+        "express-session": "^1.19.0",
+        "html5-qrcode": "^2.3.8",
+        "mongoose": "^9.9.0",
+        "nodemailer": "^9.0.4",
+        "qrcode": "^1.5.4",
+        "react": "^19.2.8",
+        "react-dom": "^19.2.8",
+        "react-router-dom": "^7.18.2",
+        "stripe": "^22.4.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-react": "^6.0.5",
+        "concurrently": "^10.0.4",
+        "nodemon": "^3.1.14",
+        "vite": "^8.2.1"
+    }
 }
